@@ -31,22 +31,25 @@ public class SearchSort {
         int[] nums = new int[amount];
         Random rand = new Random();
         for (int i = 0; i < nums.length; i++) {
-            nums[i] = rand.nextInt(10000);
+            nums[i] = rand.nextInt(100);
         }
         System.out.println(Arrays.toString(nums));
         selectionSort(nums);
         System.out.println(Arrays.toString(nums));
         System.out.print("Enter an integer to look for: ");
         int target = input.nextInt();
-        //linear
-        long start = System.nanoTime();
+        //create Stopwatch object
+        Stopwatch sw = new Stopwatch();
         linearSearch(nums, target);
-        long linearTime = System.nanoTime() - start;
-        //binary
-        start = System.nanoTime();
+        sw.stop();
+        //calculates the elapsed time
+        long linearTime = sw.getElapsedTime();
+        sw.start();
         int index = binarySearch(nums , target);
-        long binaryTime = System.nanoTime() - start;
-        if (index == -1)
+        sw.stop();
+        long binaryTime = sw.getElapsedTime();
+        //Display where target value location
+        if (index < 0)
             System.out.println(target + " is not in the list.");
         else
             System.out.println(target + " is at index " + index);
@@ -73,7 +76,12 @@ public class SearchSort {
         return - low - 1;
     }
     
-
+    /**
+     * Linear search of integer array
+     * @param list  int array to be searched through
+     * @param key   the target integer
+     * @return      index of first target integer
+     */
     public static int linearSearch(int[] list, int key) {
         for (int i = 0; i < list.length; i++) {
             if (list[i] == key) {
